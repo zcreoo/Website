@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Bhagavat Mahadev</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inter:wght@300;400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #222222;
+            --text-light: #f5f5f5;
+            --accent-yellow: #f4d03f;
+            --paper-grid: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER SECTION (Grid Paper) --- */
+        header {
+            background-color: #fff;
+            /* CSS Grid Pattern */
+            background-image: 
+                linear-gradient(var(--paper-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 60px 20px 100px 20px; /* Extra bottom padding for the tear */
+            text-align: center;
+            position: relative;
+            color: #1a1a1a;
+        }
+
+        h1 {
+            font-family: 'Abril Fatface', cursive;
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* The decorative dot/doodle on the 'i' */
+        h1::after {
+            content: '✦';
+            font-size: 2rem;
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            color: #ff6b6b;
+            animation: spin 6s linear infinite;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        /* --- TORN PAPER DIVIDER --- */
+        .torn-divider {
+            position: relative;
+            top: -50px;
+            height: 50px;
+            width: 100%;
+            background-color: var(--bg-dark);
+            /* Zig-zag clip path to create torn effect */
+            clip-path: polygon(
+                0% 20%, 2% 0%, 4% 20%, 6% 0%, 8% 20%, 10% 0%, 
+                12% 20%, 14% 0%, 16% 20%, 18% 0%, 20% 20%, 22% 0%, 
+                24% 20%, 26% 0%, 28% 20%, 30% 0%, 32% 20%, 34% 0%, 
+                36% 20%, 38% 0%, 40% 20%, 42% 0%, 44% 20%, 46% 0%, 
+                48% 20%, 50% 0%, 52% 20%, 54% 0%, 56% 20%, 58% 0%, 
+                60% 20%, 62% 0%, 64% 20%, 66% 0%, 68% 20%, 70% 0%, 
+                72% 20%, 74% 0%, 76% 20%, 78% 0%, 80% 20%, 82% 0%, 
+                84% 20%, 86% 0%, 88% 20%, 90% 0%, 92% 20%, 94% 0%, 
+                96% 20%, 98% 0%, 100% 20%, 100% 100%, 0% 100%
+            );
+            margin-bottom: -50px; /* Pull content up */
+            z-index: 2;
+        }
+
+        /* --- MAIN DARK CONTENT --- */
+        main {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* 2 Columns on Desktop */
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Left Column: Polaroid */
+        .profile-section {
+            display: flex;
+            justify-content: center;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 15px 15px 50px 15px;
+            width: 100%;
+            max-width: 320px;
+            transform: rotate(-3deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid:hover { transform: rotate(0deg) scale(1.02); }
+
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(20%);
+            border: 1px solid #ddd;
+        }
+
+        .polaroid-caption {
+            color: #333;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.5rem;
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Tape Effect */
+        .tape {
+            background-color: rgba(255, 255, 255, 0.6);
+            width: 100px;
+            height: 30px;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Right Column: Bio & Info */
+        .content-section h2 {
+            font-family: 'Abril Fatface', cursive;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .bio-text {
+            line-height: 1.6;
+            color: #bbb;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .section-title {
+            font-family: 'Abril Fatface', cursive;
+            font-size: 2rem;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px dashed #444;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .contact-item:hover { color: var(--accent-yellow); }
+        .contact-item i { font-size: 1.4rem; }
+
+        /* Experience & Education Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            border-left: 2px solid #444;
+            padding-left: 15px;
+        }
+        
+        .timeline-date { color: var(--accent-yellow); font-size: 0.85rem; font-weight: bold; }
+        .timeline-role { font-weight: 700; font-size: 1.1rem; margin: 5px 0; }
+        .timeline-desc { color: #888; font-size: 0.9rem; }
+
+        /* Software Icons */
+        .software-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .sw-icon {
+            width: 45px;
+            height: 45px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            main { grid-template-columns: 1fr; gap: 40px; }
+            .info-grid { grid-template-columns: 1fr; gap: 20px; }
+            .torn-divider { clip-path: polygon(0% 10%, 5% 0%, 10% 10%, 15% 0%, 20% 10%, 25% 0%, 30% 10%, 35% 0%, 40% 10%, 45% 0%, 50% 10%, 55% 0%, 60% 10%, 65% 0%, 70% 10%, 75% 0%, 80% 10%, 85% 0%, 90% 10%, 95% 0%, 100% 10%, 100% 100%, 0% 100%); }
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Portfolio</h1>
+        <p class="subtitle">Web Dev ✦ Digital Art ✦ Video Editing</p>
+    </header>
+
+    <div class="torn-divider"></div>
+
+    <main>
+        
+        <section class="profile-section">
+            <div class="polaroid">
+                <div class="tape"></div>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bhagavat&backgroundColor=c0aede" alt="Profile Photo">
+                <div class="polaroid-caption">Bhagavat Mahadev</div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Hello!</h2>
+            <p class="bio-text">
+                Hi, my name is Bhagavat Mahadev, a creative developer based in Kumarakom, Kerala. 
+                I have a passion for building websites, editing videos, and creating digital art 
+                that captivates and communicates effectively.
+            </p>
+
+            <div class="contact-grid">
+                <a href="https://www.instagram.com/8hagavathh" class="contact-item">
+                    <i class="ri-instagram-fill" style="color:#E1306C"></i> 8hagavathh
+                </a>
+                <a href="mailto:bhagavatmahadev603@gmail.com" class="contact-item">
+                    <i class="ri-mail-fill" style="color:#EA4335"></i> Email Me
+                </a>
+                <a href="https://github.com/zcreoo" class="contact-item">
+                    <i class="ri-github-fill" style="color:#fff"></i> zcreoo
+                </a>
+                <a href="https://linkedin.com" class="contact-item">
+                    <i class="ri-linkedin-fill" style="color:#0077B5"></i> Bhagavat Mahadev
+                </a>
+            </div>
+
+            <div class="info-grid">
+                <div>
+                    <h3 class="section-title">Software</h3>
+                    <div class="software-icons">
+                        <div class="sw-icon" style="background:#001E36"><i class="ri-code-s-slash-line"></i></div> <div class="sw-icon" style="background:#00005B"><i class="ri-video-fill"></i></div> <div class="sw-icon" style="background:#31A8FF"><i class="ri-brush-fill"></i></div> <div class="sw-icon" style="background:#181717"><i class="ri-github-fill"></i></div> </div>
+                    
+                    <h3 class="section-title" style="margin-top:30px">Interests</h3>
+                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                        <span style="border:1px solid #555; padding:5px 10px; border-radius:15px; font-size:0.8rem;">Coding</span>
+                        <span style="border:1px solid #555; padding:5px 10px; border-radius:15px; font-size:0.8rem;">Editing</span>
+                        <span style="border:1px solid #555; padding:5px 10px; border-radius:15px; font-size:0.8rem;">Gaming</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="section-title">Experience</h3>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 - Present</div>
+                        <div class="timeline-role">Freelance Developer</div>
+                        <div class="timeline-desc">Building responsive websites and digital portfolios.</div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025 - 2026</div>
+                        <div class="timeline-role">Video Editor</div>
+                        <div class="timeline-desc">Editing content for social media and personal projects.</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>
