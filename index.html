@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhagavat Mahadev</title>
-    <meta name="description" content="Bhagavat Mahadev. Based in Kerala.">
+    <title>Bhagavat Mahadev | Creative Developer</title>
+    <meta name="description" content="Bhagavat Mahadev | Creative Developer. Based in Kerala.">
+    <link rel="canonical" href="https://bhagavatmahadev.in/">
+
+    <!-- Favicon & Touch Icon -->
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
+
+    <!-- Open Graph / Meta for Social & Search Engines -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bhagavat Mahadev | Creative Developer">
+    <meta property="og:description" content="Bhagavat Mahadev | Creative Developer. Based in Kerala.">
+    <meta property="og:url" content="https://bhagavatmahadev.in/">
+    <meta property="og:image" content="https://bhagavatmahadev.in/logo.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Bhagavat Mahadev | Creative Developer">
+    <meta name="twitter:description" content="Bhagavat Mahadev | Creative Developer. Based in Kerala.">
+    <meta name="twitter:image" content="https://bhagavatmahadev.in/logo.jpg">
 
     <!-- Fonts: Syne (Display/Name) + Plus Jakarta Sans (Body & Links) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,8 +40,6 @@
             --card-border-hover: rgba(255, 255, 255, 0.25);
             --text-primary: #ffffff;
             --text-secondary: #888888;
-            --tag-bg: #181818;
-            --tag-border: rgba(255, 255, 255, 0.08);
             --btn-bg: #161616;
             --btn-border: rgba(255, 255, 255, 0.12);
             --btn-hover-bg: #ffffff;
@@ -86,6 +102,22 @@
             transition: transform 0.85s cubic-bezier(0.85, 0, 0.15, 1);
         }
 
+        .curtain-logo {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .curtain-logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 0.85rem;
+            object-fit: cover;
+            display: block;
+        }
+
         .curtain-line {
             width: 0%;
             height: 1px;
@@ -104,6 +136,11 @@
             opacity: 0;
             transform: translateY(10px);
             transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        body.ready .curtain-logo {
+            opacity: 1;
+            transform: scale(1);
         }
 
         body.ready .curtain-line {
@@ -128,7 +165,7 @@
             background-color: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 20px;
-            padding: 3rem 2.25rem;
+            padding: 2.75rem 2.25rem;
             max-width: 420px;
             width: 100%;
             text-align: center;
@@ -161,10 +198,36 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
+        /* Brand Logo in Card */
+        .logo-wrap {
+            margin-bottom: 1.25rem;
+            display: inline-block;
+        }
+
+        .brand-logo {
+            width: 68px;
+            height: 68px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: scale(0.88) translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s var(--ease-out-expo);
+            transition-delay: 0.10s;
+        }
+
+        body.loaded .brand-logo {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
         /* Masked Headline Animation */
         .headline-mask {
             overflow: hidden;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
         }
 
         h1 {
@@ -176,23 +239,40 @@
             line-height: 1.15;
             transform: translateY(100%);
             transition: transform 0.7s var(--ease-out-expo);
-            transition-delay: 0.15s;
+            transition-delay: 0.16s;
         }
 
         body.loaded h1 {
             transform: translateY(0);
         }
 
+        .role-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #e5e5e5;
+            margin-bottom: 0.2rem;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition-delay: 0.22s;
+        }
+
+        body.loaded .role-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .subtitle {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-secondary);
             font-weight: 400;
             letter-spacing: 0.01em;
-            margin-bottom: 2.25rem;
+            margin-bottom: 2rem;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(8px);
             transition: opacity 0.6s ease, transform 0.6s ease;
-            transition-delay: 0.22s;
+            transition-delay: 0.26s;
         }
 
         body.loaded .subtitle {
@@ -233,10 +313,10 @@
         }
 
         /* Staggered entrance for links */
-        body.loaded .link-btn:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.30s; }
-        body.loaded .link-btn:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.36s; }
-        body.loaded .link-btn:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.42s; }
-        body.loaded .link-btn:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.48s; }
+        body.loaded .link-btn:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.32s; }
+        body.loaded .link-btn:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.38s; }
+        body.loaded .link-btn:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.44s; }
+        body.loaded .link-btn:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.50s; }
 
         .link-btn:hover {
             background-color: var(--btn-hover-bg);
@@ -277,7 +357,7 @@
             .curtain {
                 display: none !important;
             }
-            .card, h1, .subtitle, .link-btn {
+            .card, .brand-logo, h1, .role-text, .subtitle, .link-btn {
                 opacity: 1 !important;
                 transform: none !important;
             }
@@ -294,6 +374,10 @@
             h1 {
                 font-size: 1.75rem;
             }
+            .brand-logo {
+                width: 60px;
+                height: 60px;
+            }
             .link-btn {
                 padding: 13px 16px;
                 font-size: 0.88rem;
@@ -305,20 +389,27 @@
 
     <!-- Entering Animation Curtain -->
     <div class="curtain" id="curtain" aria-hidden="true">
+        <div class="curtain-logo">
+            <img src="logo.jpg" alt="BM Logo">
+        </div>
         <div class="curtain-text">BHAGAVAT MAHADEV</div>
         <div class="curtain-line"></div>
     </div>
 
     <!-- Main Minimalist Card -->
     <div class="card">
+        <div class="logo-wrap">
+            <img src="logo.jpg" alt="Bhagavat Mahadev" class="brand-logo">
+        </div>
         <div class="headline-mask">
             <h1>Bhagavat Mahadev</h1>
         </div>
+        <p class="role-text">Creative Developer</p>
         <p class="subtitle">Based in Kerala</p>
 
         <div class="links">
             <a href="https://www.instagram.com/8hagavathh" target="_blank" rel="noopener noreferrer" class="link-btn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 12,9Z" /></svg>
                 Instagram
             </a>
 
