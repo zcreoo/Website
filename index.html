@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bhagavat Mahadev</title>
-    <meta name="description" content="Bhagavat Mahadev — Web Dev, Video Editing, Design. Based in Kumarakom, Kerala.">
+    <meta name="description" content="Bhagavat Mahadev. Based in Kerala.">
 
     <!-- Fonts: Syne (Display/Name) + Plus Jakarta Sans (Body & Links) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -188,54 +188,16 @@
             color: var(--text-secondary);
             font-weight: 400;
             letter-spacing: 0.01em;
-            margin-bottom: 1.75rem;
+            margin-bottom: 2.25rem;
             opacity: 0;
             transform: translateY(10px);
             transition: opacity 0.6s ease, transform 0.6s ease;
-            transition-delay: 0.25s;
+            transition-delay: 0.22s;
         }
 
         body.loaded .subtitle {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        /* ==========================================================================
-           SKILL TAGS
-           ========================================================================== */
-        .skills {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 2.25rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            transition-delay: 0.32s;
-        }
-
-        body.loaded .skills {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .skill-tag {
-            background-color: var(--tag-bg);
-            color: #d8d8d8;
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            border: 1px solid var(--tag-border);
-            transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
-        }
-
-        .skill-tag:hover {
-            border-color: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-            transform: translateY(-1px);
         }
 
         /* ==========================================================================
@@ -271,10 +233,10 @@
         }
 
         /* Staggered entrance for links */
-        body.loaded .link-btn:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.38s; }
-        body.loaded .link-btn:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.44s; }
-        body.loaded .link-btn:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.50s; }
-        body.loaded .link-btn:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.56s; }
+        body.loaded .link-btn:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.30s; }
+        body.loaded .link-btn:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.36s; }
+        body.loaded .link-btn:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.42s; }
+        body.loaded .link-btn:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.48s; }
 
         .link-btn:hover {
             background-color: var(--btn-hover-bg);
@@ -315,7 +277,7 @@
             .curtain {
                 display: none !important;
             }
-            .card, h1, .subtitle, .skills, .link-btn {
+            .card, h1, .subtitle, .link-btn {
                 opacity: 1 !important;
                 transform: none !important;
             }
@@ -352,13 +314,7 @@
         <div class="headline-mask">
             <h1>Bhagavat Mahadev</h1>
         </div>
-        <p class="subtitle">Based in Kumarakom, Kerala</p>
-
-        <div class="skills">
-            <span class="skill-tag">Web Dev</span>
-            <span class="skill-tag">Video Editing</span>
-            <span class="skill-tag">Design</span>
-        </div>
+        <p class="subtitle">Based in Kerala</p>
 
         <div class="links">
             <a href="https://www.instagram.com/8hagavathh" target="_blank" rel="noopener noreferrer" class="link-btn">
