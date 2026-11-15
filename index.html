@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhagavat Mahadev — Creative Developer & Visual Editor</title>
-    <meta name="description" content="Portfolio of Bhagavat Mahadev. Creative web development, video post-production, and digital visual systems based in Kumarakom, Kerala.">
+    <title>Bhagavat Mahadev</title>
+    <meta name="description" content="Bhagavat Mahadev — Web Dev, Video Editing, Design. Based in Kumarakom, Kerala.">
 
-    <!-- Fonts: Syne (Display), Plus Jakarta Sans (Body), JetBrains Mono (Technical/Metadata) -->
+    <!-- Fonts: Syne (Display/Name) + Plus Jakarta Sans (Body & Links) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================================================
-           DESIGN TOKENS & RESET
-           Strict Minimalist Black & White System
+           MINIMALIST BLACK & WHITE DESIGN SYSTEM
            ========================================================================== */
         :root {
-            --bg-canvas: #090909;
-            --bg-surface: #111111;
-            --bg-elevated: #181818;
-            --border-hairline: rgba(255, 255, 255, 0.1);
-            --border-strong: rgba(255, 255, 255, 0.22);
+            --bg-color: #080808;
+            --card-bg: #111111;
+            --card-border: rgba(255, 255, 255, 0.1);
+            --card-border-hover: rgba(255, 255, 255, 0.25);
             --text-primary: #ffffff;
-            --text-secondary: #999999;
-            --text-muted: #555555;
-            --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --container-max: 1240px;
-            --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --text-secondary: #888888;
+            --tag-bg: #181818;
+            --tag-border: rgba(255, 255, 255, 0.08);
+            --btn-bg: #161616;
+            --btn-border: rgba(255, 255, 255, 0.12);
+            --btn-hover-bg: #ffffff;
+            --btn-hover-text: #000000;
+            --font-display: 'Syne', -apple-system, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         *, *::before, *::after {
@@ -38,1532 +39,366 @@
             box-sizing: border-box;
         }
 
-        html {
-            background-color: var(--bg-canvas);
-            color: var(--text-primary);
+        body {
             font-family: var(--font-body);
-            font-size: 16px;
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            overflow-x: hidden;
+            position: relative;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        body {
-            background-color: var(--bg-canvas);
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        ::selection {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-            transition: opacity 0.25s ease, border-color 0.25s ease;
-        }
-
-        button {
-            font-family: inherit;
-            background: none;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        /* Keyboard Focus Accessibility */
-        a:focus-visible, button:focus-visible {
-            outline: 2px solid #ffffff;
-            outline-offset: 4px;
-        }
-
-        /* Subtle Architectural Grain Overlay */
-        .ambient-noise {
+        /* Ambient Fine Grid Background */
+        body::before {
+            content: '';
             position: fixed;
             inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
             pointer-events: none;
-            z-index: 99;
-            opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 0;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
         }
 
         /* ==========================================================================
-           ENTERING ANIMATION: THE MONOLITHIC CURTAIN
+           ENTERING ANIMATION: CHOREOGRAPHED CURTAIN REVEAL
            ========================================================================== */
-        .preloader-curtain {
+        .curtain {
             position: fixed;
             inset: 0;
-            background-color: #040404;
-            z-index: 9999;
+            background-color: #020202;
+            z-index: 999;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 2.5rem 3rem;
-            will-change: transform;
-            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
-        }
-
-        .preloader-top, .preloader-bottom {
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-muted);
+            pointer-events: none;
+            transition: transform 0.85s cubic-bezier(0.85, 0, 0.15, 1);
         }
 
-        .preloader-center {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .counter-wrap {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: clamp(4.5rem, 16vw, 12rem);
-            line-height: 0.85;
-            letter-spacing: -0.04em;
-            color: #ffffff;
-        }
-
-        .counter-unit {
-            font-family: var(--font-mono);
-            font-size: clamp(1rem, 2vw, 1.75rem);
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: 0;
-        }
-
-        .preloader-status {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .preloader-pulse {
-            width: 7px;
-            height: 7px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            animation: pulse 1s infinite alternate;
-        }
-
-        .preloader-progress-line {
-            width: 100%;
-            height: 1px;
-            background-color: var(--border-hairline);
-            position: relative;
-            margin-top: 1.5rem;
-            overflow: hidden;
-        }
-
-        .preloader-progress-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
+        .curtain-line {
             width: 0%;
+            height: 1px;
             background-color: #ffffff;
-            transition: width 0.08s ease-out;
+            transition: width 0.6s var(--ease-out-expo);
         }
 
-        .loaded .preloader-curtain {
-            transform: translateY(-100%);
-        }
-
-        /* Staggered page reveal classes */
-        .reveal-node {
+        .curtain-text {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 1rem;
             opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.9s var(--transition-smooth), transform 0.9s var(--transition-smooth);
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .loaded .reveal-node {
+        body.ready .curtain-line {
+            width: 140px;
+        }
+
+        body.ready .curtain-text {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .delay-1 { transition-delay: 0.08s; }
-        .delay-2 { transition-delay: 0.16s; }
-        .delay-3 { transition-delay: 0.24s; }
-        .delay-4 { transition-delay: 0.32s; }
-        .delay-5 { transition-delay: 0.40s; }
+        body.loaded .curtain {
+            transform: translateY(-100%);
+        }
 
         /* ==========================================================================
-           HEADER & NAVIGATION
+           MAIN CARD (UPGRADED AESTHETIC)
            ========================================================================== */
-        .site-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: rgba(9, 9, 9, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-hairline);
-            padding: 1.25rem 2rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .nav-container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-block {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-        }
-
-        .brand-title {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.05rem;
-            letter-spacing: -0.01em;
-            color: #ffffff;
-        }
-
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-hairline);
-            padding: 0.2rem 0.6rem;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            animation: pulse 1.6s infinite alternate;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2.25rem;
-            list-style: none;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
+        .card {
             position: relative;
-            padding: 0.25rem 0;
+            z-index: 1;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 3rem 2.25rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8),
+                        0 0 0 1px rgba(255, 255, 255, 0.03);
+            opacity: 0;
+            transform: translateY(28px) scale(0.97);
+            transition: opacity 0.8s var(--ease-out-expo), 
+                        transform 0.8s var(--ease-out-expo),
+                        border-color 0.3s ease;
         }
 
-        .nav-links a::after {
+        body.loaded .card {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .card:hover {
+            border-color: var(--card-border-hover);
+        }
+
+        /* Subtle Corner Accent */
+        .card::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
+            top: -1px;
+            left: 24px;
+            right: 24px;
             height: 1px;
-            background-color: #ffffff;
-            transition: width 0.25s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
-        .nav-links a:hover {
-            color: #ffffff;
+        /* Masked Headline Animation */
+        .headline-mask {
+            overflow: hidden;
+            margin-bottom: 0.4rem;
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .clock-display {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-            border-left: 1px solid var(--border-hairline);
-            padding-left: 1.5rem;
-        }
-
-        .clock-display span {
-            color: var(--text-secondary);
-        }
-
-        /* Mobile Hamburger */
-        .mobile-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            width: 28px;
-            height: 24px;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .mobile-toggle span {
-            display: block;
-            width: 100%;
-            height: 1px;
-            background-color: #ffffff;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        /* Mobile Overlay Menu */
-        .mobile-drawer {
-            position: fixed;
-            inset: 0;
-            background-color: #070707;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 5rem 2rem 3rem 2rem;
-            transform: translateX(100%);
-            transition: transform 0.45s var(--transition-smooth);
-        }
-
-        .mobile-drawer.active {
-            transform: translateX(0);
-        }
-
-        .mobile-nav-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1.75rem;
-        }
-
-        .mobile-nav-links a {
+        h1 {
             font-family: var(--font-display);
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: #ffffff;
-            display: block;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            line-height: 1.15;
+            transform: translateY(100%);
+            transition: transform 0.7s var(--ease-out-expo);
+            transition-delay: 0.15s;
         }
 
-        .mobile-drawer-footer {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
+        body.loaded h1 {
+            transform: translateY(0);
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            border-top: 1px solid var(--border-hairline);
-            padding-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            margin-bottom: 1.75rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition-delay: 0.25s;
+        }
+
+        body.loaded .subtitle {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* ==========================================================================
-           MAIN CONTENT & SECTIONS
+           SKILL TAGS
            ========================================================================== */
-        main {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* --- HERO: THESIS STATEMENT --- */
-        .hero-section {
-            min-height: calc(88vh - 80px);
+        .skills {
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            padding: 6rem 0 5rem 0;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .hero-meta-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-headline {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6.2vw, 5.75rem);
-            font-weight: 800;
-            line-height: 1.02;
-            letter-spacing: -0.035em;
-            color: #ffffff;
-            max-width: 1100px;
-            margin-bottom: 3rem;
-            text-transform: uppercase;
-        }
-
-        .hero-footer-grid {
-            display: grid;
-            grid-template-columns: 1.25fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .hero-thesis-text {
-            font-size: 1.15rem;
-            line-height: 1.65;
-            color: var(--text-secondary);
-            font-weight: 300;
-        }
-
-        .hero-thesis-text strong {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .action-group {
-            display: flex;
-            gap: 1rem;
+            gap: 8px;
+            margin-bottom: 2.25rem;
             flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition-delay: 0.32s;
         }
 
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            background-color: #ffffff;
-            color: #000000;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 1rem 1.75rem;
-            border: 1px solid #ffffff;
-            transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        body.loaded .skills {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .btn-primary:hover {
-            background-color: transparent;
-            color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            background-color: transparent;
-            color: #ffffff;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
+        .skill-tag {
+            background-color: var(--tag-bg);
+            color: #d8d8d8;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.78rem;
             font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 1rem 1.75rem;
-            border: 1px solid var(--border-strong);
-            transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+            letter-spacing: 0.02em;
+            border: 1px solid var(--tag-border);
+            transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
         }
 
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+        .skill-tag:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        /* ==========================================================================
+           LINKS & BUTTONS
+           ========================================================================== */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--btn-bg);
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            letter-spacing: -0.01em;
+            border: 1px solid var(--btn-border);
+            opacity: 0;
+            transform: translateY(14px);
+            transition: background-color 0.25s ease, 
+                        color 0.25s ease, 
+                        border-color 0.25s ease, 
+                        transform 0.25s var(--ease-out-expo),
+                        opacity 0.6s ease;
+        }
+
+        /* Staggered entrance for links */
+        body.loaded .link-btn:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.38s; }
+        body.loaded .link-btn:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.44s; }
+        body.loaded .link-btn:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.50s; }
+        body.loaded .link-btn:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.56s; }
+
+        .link-btn:hover {
+            background-color: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
             border-color: #ffffff;
             transform: translateY(-2px);
         }
 
-        .quick-note {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-        }
-
-        /* --- SECTION HEADERS --- */
-        .section-header {
-            padding: 5rem 0 2.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .section-eyebrow {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 3.2vw, 2.75rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            color: #ffffff;
-        }
-
-        .section-index-tag {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 0.1em;
-        }
-
-        /* --- DISCIPLINES / ARCHITECTURAL ROWS --- */
-        .disciplines-list {
-            display: flex;
-            flex-direction: column;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .discipline-row {
-            display: grid;
-            grid-template-columns: 80px 1.5fr 2fr 1.2fr;
-            padding: 3rem 0;
-            border-bottom: 1px solid var(--border-hairline);
-            align-items: start;
-            gap: 2rem;
-            transition: background-color 0.25s ease;
-        }
-
-        .discipline-row:last-child {
-            border-bottom: none;
-        }
-
-        .discipline-row:hover {
-            background-color: rgba(255, 255, 255, 0.015);
-        }
-
-        .discipline-num {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .discipline-name {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            color: #ffffff;
-        }
-
-        .discipline-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .discipline-tools {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            letter-spacing: 0.02em;
-        }
-
-        .discipline-tools span {
-            display: block;
-            color: #cccccc;
-        }
-
-        /* --- SELECTED WORKS INDEX --- */
-        .works-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0 5rem 0;
-        }
-
-        .works-table th {
-            text-align: left;
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            padding: 1.25rem 0;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .works-row {
-            cursor: pointer;
-            border-bottom: 1px solid var(--border-hairline);
-            transition: background-color 0.25s ease, padding 0.25s ease;
-        }
-
-        .works-row:hover {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .works-row td {
-            padding: 2.25rem 0;
-            vertical-align: middle;
-        }
-
-        .works-num {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            width: 60px;
-        }
-
-        .works-title {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.01em;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .works-title svg {
-            opacity: 0;
-            transform: translateX(-8px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .works-row:hover .works-title svg {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .works-role {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .works-year {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-align: right;
-        }
-
-        /* --- STUDIO & ABOUT SPLIT --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr;
-            gap: 5rem;
-            padding: 4rem 0 6rem 0;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .about-portrait-wrap {
-            position: relative;
-        }
-
-        .monochrome-frame {
-            border: 1px solid var(--border-hairline);
-            padding: 1.25rem;
-            background-color: var(--bg-surface);
-            position: sticky;
-            top: 7rem;
-        }
-
-        .frame-inner {
-            aspect-ratio: 4 / 5;
-            background: linear-gradient(180deg, #181818 0%, #0e0e0e 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .frame-watermark {
-            position: absolute;
-            top: 1rem;
-            right: 1.25rem;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 0.1em;
-        }
-
-        .frame-graphic {
-            font-family: var(--font-display);
-            font-size: 5rem;
-            font-weight: 800;
-            line-height: 0.8;
-            color: rgba(255, 255, 255, 0.06);
-            position: absolute;
-            bottom: 3.5rem;
-            left: 1rem;
-            user-select: none;
-        }
-
-        .frame-caption {
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            color: #ffffff;
-            letter-spacing: 0.05em;
-            position: relative;
-            z-index: 2;
-        }
-
-        .frame-subcaption {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 0.2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .about-prose {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .statement-lead {
-            font-family: var(--font-display);
-            font-size: clamp(1.4rem, 2.2vw, 1.85rem);
-            font-weight: 600;
-            line-height: 1.35;
-            letter-spacing: -0.01em;
-            color: #ffffff;
-        }
-
-        .statement-body {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            font-weight: 300;
-        }
-
-        .statement-body strong {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        .chronology-box {
-            margin-top: 1.5rem;
-            border-top: 1px solid var(--border-hairline);
-            padding-top: 2rem;
-        }
-
-        .chronology-title {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-entry {
-            display: grid;
-            grid-template-columns: 140px 1fr;
-            padding: 1.25rem 0;
-            border-bottom: 1px solid var(--border-hairline);
-            gap: 1.5rem;
-        }
-
-        .timeline-period {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .timeline-role-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #ffffff;
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-role-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        /* --- CONNECT / FOOTER SECTION --- */
-        .footer-section {
-            padding: 7rem 0 4rem 0;
-        }
-
-        .footer-cta-wrap {
-            margin-bottom: 6rem;
-        }
-
-        .footer-eyebrow {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 1.25rem;
-        }
-
-        .footer-huge-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6.8vw, 6.25rem);
-            font-weight: 800;
-            line-height: 0.95;
-            letter-spacing: -0.035em;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 2.5rem;
-        }
-
-        .footer-grid-links {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            border-top: 1px solid var(--border-hairline);
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .footer-link-card {
-            padding: 2.5rem 1.5rem;
-            border-right: 1px solid var(--border-hairline);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 180px;
-            transition: background-color 0.25s ease;
-        }
-
-        .footer-link-card:last-child {
-            border-right: none;
-        }
-
-        .footer-link-card:hover {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        .link-card-label {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            transition: color 0.25s ease;
-        }
-
-        .footer-link-card:hover .link-card-label {
-            color: #444444;
-        }
-
-        .link-card-value {
-            font-family: var(--font-display);
-            font-size: 1.35rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .colophon-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 3rem;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .back-top-btn {
-            color: var(--text-secondary);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: color 0.2s ease;
-        }
-
-        .back-top-btn:hover {
-            color: #ffffff;
-        }
-
-        /* --- TOAST NOTIFICATION --- */
-        .toast-notify {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background-color: #ffffff;
-            color: #000000;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 0.85rem 1.4rem;
-            border-radius: 2px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            opacity: 0;
-            transform: translateY(12px);
-            pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 99999;
-        }
-
-        .toast-notify.show {
-            opacity: 1;
+        .link-btn:active {
             transform: translateY(0);
         }
 
-        /* ==========================================================================
-           ANIMATIONS & ACCESSIBILITY
-           ========================================================================== */
-        @keyframes pulse {
-            0% { opacity: 0.3; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.1); }
+        /* Keyboard Accessibility */
+        .link-btn:focus-visible {
+            outline: 2px solid #ffffff;
+            outline-offset: 3px;
         }
 
-        /* Prefers-reduced-motion: instant load, disable heavy transitions */
+        /* Clean Vector SVGs */
+        .icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .link-btn:hover .icon {
+            transform: scale(1.08);
+        }
+
+        /* Reduced Motion Fallback */
         @media (prefers-reduced-motion: reduce) {
             * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
             }
-            .preloader-curtain {
+            .curtain {
                 display: none !important;
             }
-            .reveal-node {
+            .card, h1, .subtitle, .skills, .link-btn {
                 opacity: 1 !important;
                 transform: none !important;
             }
         }
 
-        /* ==========================================================================
-           RESPONSIVE BREAKPOINTS (375px, 768px, 1024px)
-           ========================================================================== */
-        @media (max-width: 1024px) {
-            .hero-footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
+        /* Small Screen Polish (375px) */
+        @media (max-width: 400px) {
+            body {
+                padding: 16px;
             }
-            .discipline-row {
-                grid-template-columns: 60px 1.2fr 1.5fr;
+            .card {
+                padding: 2.25rem 1.5rem;
             }
-            .discipline-tools {
-                grid-column: 2 / -1;
-                margin-top: -0.5rem;
+            h1 {
+                font-size: 1.75rem;
             }
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            .monochrome-frame {
-                position: relative;
-                top: 0;
-                max-width: 420px;
-            }
-            .footer-grid-links {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .footer-link-card:nth-child(2) {
-                border-right: none;
-            }
-            .footer-link-card:nth-child(1), .footer-link-card:nth-child(2) {
-                border-bottom: 1px solid var(--border-hairline);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .site-header {
-                padding: 1rem 1.25rem;
-            }
-            main {
-                padding: 0 1.25rem;
-            }
-            .nav-links, .clock-display {
-                display: none;
-            }
-            .mobile-toggle {
-                display: flex;
-            }
-            .preloader-curtain {
-                padding: 1.75rem 1.25rem;
-            }
-            .hero-section {
-                padding: 4rem 0 3.5rem 0;
-            }
-            .hero-meta-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-                margin-bottom: 1.5rem;
-            }
-            .discipline-row {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 2.25rem 0;
-            }
-            .discipline-num {
-                margin-bottom: -0.5rem;
-            }
-            .works-table th:nth-child(3), .works-row td:nth-child(3) {
-                display: none;
-            }
-            .works-title {
-                font-size: 1.15rem;
-            }
-            .timeline-entry {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-            .footer-grid-links {
-                grid-template-columns: 1fr;
-            }
-            .footer-link-card {
-                border-right: none !important;
-                border-bottom: 1px solid var(--border-hairline);
-                min-height: 130px;
-                padding: 1.75rem 1.25rem;
-            }
-            .colophon-bar {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
+            .link-btn {
+                padding: 13px 16px;
+                font-size: 0.88rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Texture Layer -->
-    <div class="ambient-noise" aria-hidden="true"></div>
+    <!-- Entering Animation Curtain -->
+    <div class="curtain" id="curtain" aria-hidden="true">
+        <div class="curtain-text">BHAGAVAT MAHADEV</div>
+        <div class="curtain-line"></div>
+    </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast-notify" role="status" aria-live="polite">Email Copied to Clipboard</div>
+    <!-- Main Minimalist Card -->
+    <div class="card">
+        <div class="headline-mask">
+            <h1>Bhagavat Mahadev</h1>
+        </div>
+        <p class="subtitle">Based in Kumarakom, Kerala</p>
 
-    <!-- ==========================================================================
-         ENTERING ANIMATION: THE CURTAIN
-         ========================================================================== -->
-    <div id="preloader" class="preloader-curtain" aria-hidden="false">
-        <div class="preloader-top">
-            <div>BM // STUDIO ARCHIVE</div>
-            <div>KUMARAKOM · 09°37' N 76°25' E</div>
+        <div class="skills">
+            <span class="skill-tag">Web Dev</span>
+            <span class="skill-tag">Video Editing</span>
+            <span class="skill-tag">Design</span>
         </div>
 
-        <div class="preloader-center">
-            <div class="counter-wrap">
-                <span id="counterValue">00</span>
-                <span class="counter-unit">%</span>
-            </div>
-            <div class="preloader-status">
-                <div class="preloader-pulse"></div>
-                <span id="preloaderText">CALIBRATING INTERACTION SYSTEMS</span>
-            </div>
-            <div class="preloader-progress-line">
-                <div id="progressBar" class="preloader-progress-bar"></div>
-            </div>
-        </div>
+        <div class="links">
+            <a href="https://www.instagram.com/8hagavathh" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                Instagram
+            </a>
 
-        <div class="preloader-bottom">
-            <div>BHAGAVAT MAHADEV</div>
-            <div>EDITION // 2026</div>
+            <a href="https://share.google/S8fDdwJNY30WEvoi2" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" /></svg>
+                LinkedIn
+            </a>
+            
+            <a href="https://github.com/zcreoo" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" /></svg>
+                GitHub
+            </a>
+
+            <a href="mailto:bhagavatmahadev603@gmail.com" class="link-btn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
+                Email Me
+            </a>
         </div>
     </div>
 
-    <!-- ==========================================================================
-         TOP NAVIGATION BAR
-         ========================================================================== -->
-    <header class="site-header">
-        <div class="nav-container">
-            <div class="brand-block">
-                <a href="#hero" class="brand-title">BHAGAVAT MAHADEV</a>
-                <div class="status-pill">
-                    <span class="status-dot"></span>
-                    <span>AVAILABLE</span>
-                </div>
-            </div>
-
-            <nav aria-label="Main Navigation">
-                <ul class="nav-links">
-                    <li><a href="#disciplines">Disciplines</a></li>
-                    <li><a href="#works">Works</a></li>
-                    <li><a href="#about">Studio</a></li>
-                    <li><a href="#connect">Connect</a></li>
-                </ul>
-            </nav>
-
-            <div class="clock-display" title="Local Time in Kumarakom, Kerala">
-                IST <span id="keralaClock">00:00:00</span>
-            </div>
-
-            <!-- Mobile Hamburger Toggle -->
-            <button id="mobileMenuBtn" class="mobile-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Mobile Drawer Overlay -->
-    <div id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
-        <ul class="mobile-nav-links">
-            <li><a href="#disciplines" class="mobile-link">01 / Disciplines</a></li>
-            <li><a href="#works" class="mobile-link">02 / Selected Works</a></li>
-            <li><a href="#about" class="mobile-link">03 / Studio & Bio</a></li>
-            <li><a href="#connect" class="mobile-link">04 / Direct Connect</a></li>
-        </ul>
-        <div class="mobile-drawer-footer">
-            <div>BHAGAVAT MAHADEV · KUMARAKOM, KERALA</div>
-            <div>LOCAL TIME: <span id="mobileKeralaClock">--:--:--</span> IST</div>
-        </div>
-    </div>
-
-    <!-- ==========================================================================
-         PAGE CONTENT
-         ========================================================================== -->
-    <main>
-
-        <!-- --- HERO SECTION --- -->
-        <section id="hero" class="hero-section">
-            <div class="hero-meta-row reveal-node delay-1">
-                <div>DISCIPLINES // CODE · CINEMATICS · DESIGN</div>
-                <div>LOCATION // KUMARAKOM, KERALA, IN</div>
-            </div>
-
-            <h1 class="hero-headline reveal-node delay-2">
-                Crafting digital experiences at the intersection of code & cinematics.
-            </h1>
-
-            <div class="hero-footer-grid reveal-node delay-3">
-                <p class="hero-thesis-text">
-                    I am <strong>Bhagavat Mahadev</strong>, a creative developer and video editor. 
-                    I build high-performance web systems and post-production visuals with obsessive 
-                    typographic discipline, crisp engineering, and uncompromising minimalism.
-                </p>
-
-                <div class="hero-actions">
-                    <div class="action-group">
-                        <a href="mailto:bhagavatmahadev603@gmail.com?subject=Project%20Inquiry%20via%20Portfolio" class="btn-primary">
-                            <span>Initiate Dialogue</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
-                        <button id="copyEmailHero" class="btn-secondary" title="Click to copy email address">
-                            <span>Copy Email</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- --- DISCIPLINES SECTION --- -->
-        <section id="disciplines">
-            <div class="section-header reveal-node">
-                <div>
-                    <div class="section-eyebrow">PRACTICE & EXPERTISE</div>
-                    <h2 class="section-title">Core Disciplines</h2>
-                </div>
-                <div class="section-index-tag">[01 / 03]</div>
-            </div>
-
-            <div class="disciplines-list">
-                <article class="discipline-row reveal-node delay-1">
-                    <div class="discipline-num">/ 01</div>
-                    <div class="discipline-name">Creative Web Development</div>
-                    <div class="discipline-desc">
-                        Bespoke web architectures built from pure principles. Clean semantic markup, 
-                        fluid typography scales, performant interactions, and responsive layouts engineered without bloated frameworks.
-                    </div>
-                    <div class="discipline-tools">
-                        CAPABILITIES
-                        <span>TypeScript · Modern CSS · Responsive Systems · Accessibility · DOM Architecture</span>
-                    </div>
-                </article>
-
-                <article class="discipline-row reveal-node delay-2">
-                    <div class="discipline-num">/ 02</div>
-                    <div class="discipline-name">Video Post-Production & Direction</div>
-                    <div class="discipline-desc">
-                        Rhythm-driven editorial cutting, sound architecture, and cohesive tonal color grading. 
-                        Transforming raw captured frames into sharp narrative content with relentless attention to pace and impact.
-                    </div>
-                    <div class="discipline-tools">
-                        POST STACK
-                        <span>Premiere Pro · DaVinci Resolve · After Effects · Sound Design · Color Timing</span>
-                    </div>
-                </article>
-
-                <article class="discipline-row reveal-node delay-3">
-                    <div class="discipline-num">/ 03</div>
-                    <div class="discipline-name">Visual Systems & Digital Art</div>
-                    <div class="discipline-desc">
-                        Monochrome visual identity, interface hierarchy, grid alignment, and typographic structure. 
-                        Rooted in Swiss design fundamentals and modern brutalist precision.
-                    </div>
-                    <div class="discipline-tools">
-                        DISCIPLINES
-                        <span>Figma · Layout Architecture · Typography Curation · Vector Graphic Art</span>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- --- SELECTED WORKS SECTION --- -->
-        <section id="works">
-            <div class="section-header reveal-node">
-                <div>
-                    <div class="section-eyebrow">ARCHIVE & COMMISSIONS</div>
-                    <h2 class="section-title">Selected Works</h2>
-                </div>
-                <div class="section-index-tag">[02 / 03]</div>
-            </div>
-
-            <table class="works-table reveal-node delay-1">
-                <thead>
-                    <tr>
-                        <th>Index</th>
-                        <th>Project / Initiative</th>
-                        <th>Discipline</th>
-                        <th style="text-align: right;">Timeline</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="works-row" onclick="window.open('https://github.com/zcreoo/Website', '_blank')">
-                        <td class="works-num">01</td>
-                        <td class="works-title">
-                            <span>Minimalist Architectural Web Portfolio</span>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </td>
-                        <td class="works-role">Frontend Architecture & UI System</td>
-                        <td class="works-year">2026</td>
-                    </tr>
-                    <tr class="works-row" onclick="window.open('https://www.instagram.com/8hagavathh', '_blank')">
-                        <td class="works-num">02</td>
-                        <td class="works-title">
-                            <span>Editorial & Narrative Video Productions</span>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </td>
-                        <td class="works-role">Post-Production, Color & Sound</td>
-                        <td class="works-year">2025 — 2026</td>
-                    </tr>
-                    <tr class="works-row" onclick="window.open('https://github.com/zcreoo', '_blank')">
-                        <td class="works-num">03</td>
-                        <td class="works-title">
-                            <span>Interactive Code Experiments & Repositories</span>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </td>
-                        <td class="works-role">Open Source & Web Prototypes</td>
-                        <td class="works-year">2025 — 2026</td>
-                    </tr>
-                    <tr class="works-row" onclick="window.open('https://share.google/S8fDdwJNY30WEvoi2', '_blank')">
-                        <td class="works-num">04</td>
-                        <td class="works-title">
-                            <span>Visual Direction & Content Engineering</span>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </td>
-                        <td class="works-role">Digital Art & Narrative Assembly</td>
-                        <td class="works-year">2025</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- --- ABOUT & STUDIO SECTION --- -->
-        <section id="about">
-            <div class="section-header reveal-node">
-                <div>
-                    <div class="section-eyebrow">BACKGROUND & PHILOSOPHY</div>
-                    <h2 class="section-title">The Studio</h2>
-                </div>
-                <div class="section-index-tag">[03 / 03]</div>
-            </div>
-
-            <div class="about-grid">
-                <div class="about-portrait-wrap reveal-node delay-1">
-                    <div class="monochrome-frame">
-                        <div class="frame-inner">
-                            <div class="frame-watermark">09°37'N 76°25'E</div>
-                            <div class="frame-graphic">BM</div>
-                            <div class="frame-caption">BHAGAVAT MAHADEV</div>
-                            <div class="frame-subcaption">KUMARAKOM, KERALA // IN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="about-prose reveal-node delay-2">
-                    <h3 class="statement-lead">
-                        "Restraint is not the absence of design; it is the deliberate refusal to hide behind excess."
-                    </h3>
-
-                    <p class="statement-body">
-                        Operating from <strong>Kumarakom, Kerala</strong>, I approach web systems and visual media through 
-                        a lens of intense reduction. Every line of markup, typographic pairing, and editorial cut must earn its place. 
-                        In a digital landscape crowded with interchangeable templates and superficial gradients, I prioritize durability, 
-                        structural clarity, and visual impact.
-                    </p>
-
-                    <p class="statement-body">
-                        Whether architecting lightweight, accessible websites or crafting rhythmically precise video edits, 
-                        my process balances engineering rigor with sharp aesthetic instinct.
-                    </p>
-
-                    <div class="chronology-box">
-                        <div class="chronology-title">PRACTICE CHRONOLOGY</div>
-
-                        <div class="timeline-entry">
-                            <div class="timeline-period">2026 — PRESENT</div>
-                            <div>
-                                <div class="timeline-role-name">Freelance Creative Developer & Media Consultant</div>
-                                <div class="timeline-role-desc">Building custom digital portfolios, responsive client interfaces, and creative web solutions.</div>
-                            </div>
-                        </div>
-
-                        <div class="timeline-entry">
-                            <div class="timeline-period">2025 — 2026</div>
-                            <div>
-                                <div class="timeline-role-name">Video Editor & Visual Storyteller</div>
-                                <div class="timeline-role-desc">Editorial assembly, motion timing, and social narrative post-production.</div>
-                            </div>
-                        </div>
-
-                        <div class="timeline-entry">
-                            <div class="timeline-period">CORE STACK</div>
-                            <div>
-                                <div class="timeline-role-name">Frontend & Post-Production Matrix</div>
-                                <div class="timeline-role-desc">HTML5 · CSS Architecture · JavaScript/TypeScript · Git · Premiere Pro · DaVinci Resolve · Figma</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- --- DIRECT CONNECT & FOOTER --- -->
-        <section id="connect" class="footer-section">
-            <div class="footer-cta-wrap reveal-node">
-                <div class="footer-eyebrow">INITIATE COLLABORATION</div>
-                <h2 class="footer-huge-title">
-                    Let's Build<br>Something Enduring.
-                </h2>
-                <div class="action-group">
-                    <a href="mailto:bhagavatmahadev603@gmail.com" class="btn-primary">
-                        <span>Send Direct Email</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </a>
-                    <button id="copyEmailFooter" class="btn-secondary">
-                        <span>Copy Email Address</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Four-Column Direct Links -->
-            <div class="footer-grid-links reveal-node delay-1">
-                <a href="mailto:bhagavatmahadev603@gmail.com" class="footer-link-card">
-                    <span class="link-card-label">01 // DIRECT MAIL</span>
-                    <span class="link-card-value">
-                        <span>Email</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </span>
-                </a>
-
-                <a href="https://github.com/zcreoo" target="_blank" rel="noopener noreferrer" class="footer-link-card">
-                    <span class="link-card-label">02 // CODE ARCHIVE</span>
-                    <span class="link-card-value">
-                        <span>GitHub</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </span>
-                </a>
-
-                <a href="https://www.instagram.com/8hagavathh" target="_blank" rel="noopener noreferrer" class="footer-link-card">
-                    <span class="link-card-label">03 // VISUAL DISPATCH</span>
-                    <span class="link-card-value">
-                        <span>Instagram</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </span>
-                </a>
-
-                <a href="https://share.google/S8fDdwJNY30WEvoi2" target="_blank" rel="noopener noreferrer" class="footer-link-card">
-                    <span class="link-card-label">04 // PROFESSIONAL NETWORK</span>
-                    <span class="link-card-value">
-                        <span>LinkedIn</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </span>
-                </a>
-            </div>
-
-            <div class="colophon-bar reveal-node delay-2">
-                <div>© 2026 BHAGAVAT MAHADEV. ALL RIGHTS RESERVED.</div>
-                <div>DESIGNED WITH MONOCHROME DISCIPLINE · KUMARAKOM, KERALA</div>
-                <a href="#hero" class="back-top-btn">
-                    <span>BACK TO APEX</span>
-                    <span>↑</span>
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ==========================================================================
-         CLIENT JAVASCRIPT: PRELOADER, CLOCK, COPY, MOBILE DRAWER
-         ========================================================================== -->
+    <!-- Entrance Controller -->
     <script>
         (function() {
-            'use strict';
-
-            // 1. Kinetic Curtain Preloader
-            const preloader = document.getElementById('preloader');
-            const counterValue = document.getElementById('counterValue');
-            const progressBar = document.getElementById('progressBar');
-            const preloaderText = document.getElementById('preloaderText');
-
-            const statusSteps = [
-                { threshold: 25, text: 'LOADING TYPOGRAPHIC ASSETS' },
-                { threshold: 60, text: 'STRUCTURING MONOCHROME GEOMETRY' },
-                { threshold: 85, text: 'INITIALIZING INTERACTION MATRIX' },
-                { threshold: 100, text: 'READY' }
-            ];
-
-            let count = 0;
-            const duration = 1200; // 1.2s ramp
-            const startTime = performance.now();
-
-            function updateLoader(now) {
-                const elapsed = now - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                // Ease out cubic
-                const eased = 1 - Math.pow(1 - progress, 3);
-                count = Math.floor(eased * 100);
-
-                if (counterValue) counterValue.textContent = count.toString().padStart(2, '0');
-                if (progressBar) progressBar.style.width = count + '%';
-
-                const currentStep = statusSteps.find(step => count <= step.threshold) || statusSteps[statusSteps.length - 1];
-                if (preloaderText) preloaderText.textContent = currentStep.text;
-
-                if (progress < 1) {
-                    requestAnimationFrame(updateLoader);
-                } else {
-                    setTimeout(() => {
-                        document.body.classList.add('loaded');
-                        if (preloader) {
-                            preloader.setAttribute('aria-hidden', 'true');
-                        }
-                    }, 250);
-                }
-            }
-
-            // Check reduced motion preference
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (prefersReducedMotion) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 document.body.classList.add('loaded');
-                if (preloader) preloader.style.display = 'none';
-            } else {
-                requestAnimationFrame(updateLoader);
+                return;
             }
 
-            // 2. Kerala Local Clock (IST = UTC+5:30)
-            function updateKeralaClock() {
-                const clockDesktop = document.getElementById('keralaClock');
-                const clockMobile = document.getElementById('mobileKeralaClock');
+            // Quick, crisp entrance sequence (~650ms total)
+            requestAnimationFrame(() => {
+                document.body.classList.add('ready');
+            });
 
-                const now = new Date();
-                const options = {
-                    timeZone: 'Asia/Kolkata',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                };
-
-                const timeString = new Intl.DateTimeFormat('en-GB', options).format(now);
-                if (clockDesktop) clockDesktop.textContent = timeString;
-                if (clockMobile) clockMobile.textContent = timeString;
-            }
-            updateKeralaClock();
-            setInterval(updateKeralaClock, 1000);
-
-            // 3. Email Copy Interaction with Tactile Feedback
-            const emailAddress = 'bhagavatmahadev603@gmail.com';
-            const toast = document.getElementById('toast');
-
-            function triggerToast(message) {
-                if (!toast) return;
-                toast.textContent = message;
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2400);
-            }
-
-            function handleCopyEmail(button) {
-                navigator.clipboard.writeText(emailAddress).then(() => {
-                    triggerToast('Email Copied to Clipboard');
-                    const span = button.querySelector('span');
-                    const originalText = span ? span.textContent : '';
-                    if (span) span.textContent = 'Copied!';
-                    setTimeout(() => {
-                        if (span) span.textContent = originalText;
-                    }, 2000);
-                }).catch(() => {
-                    triggerToast('Email: ' + emailAddress);
-                });
-            }
-
-            const copyHeroBtn = document.getElementById('copyEmailHero');
-            const copyFooterBtn = document.getElementById('copyEmailFooter');
-            if (copyHeroBtn) copyHeroBtn.addEventListener('click', () => handleCopyEmail(copyHeroBtn));
-            if (copyFooterBtn) copyFooterBtn.addEventListener('click', () => handleCopyEmail(copyFooterBtn));
-
-            // 4. Mobile Drawer Navigation
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            const mobileDrawer = document.getElementById('mobileDrawer');
-            const mobileLinks = document.querySelectorAll('.mobile-link');
-
-            function toggleMobileMenu() {
-                const isOpen = mobileDrawer.classList.toggle('active');
-                mobileBtn.setAttribute('aria-expanded', isOpen);
-                mobileDrawer.setAttribute('aria-hidden', !isOpen);
-                document.body.style.overflow = isOpen ? 'hidden' : '';
-            }
-
-            if (mobileBtn && mobileDrawer) {
-                mobileBtn.addEventListener('click', toggleMobileMenu);
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (mobileDrawer.classList.contains('active')) {
-                            toggleMobileMenu();
-                        }
-                    });
-                });
-            }
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 550);
         })();
     </script>
 </body>
